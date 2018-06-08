@@ -66,7 +66,7 @@ class BoatController extends Controller
         $mapPosition = $mapManager->tileExists($x, $y);
 
         if ($mapPosition == false) {
-            $this->addFlash('danger','Are you Crazy Jack ?!!! Your are going to out of map ! JohnDoDev Pirate is going to kill you !');
+            $this->addFlash('danger','Are you Crazy Jack ?!!! Your are going to out of map !<br />JohnDoDev Pirate is going to kill you !');
             return $this->redirectToRoute('map');
         }
 
