@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Boat;
+use AppBundle\Service\MapManager;
 use AppBundle\Traits\BoatTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -31,6 +32,54 @@ class BoatController extends Controller
         $boat->setCoordY($y);
 
         $em->flush();
+
+        return $this->redirectToRoute('map');
+    }
+
+    /**
+     * @Route("/move/{direction}", name="moveDirection", requirements={"direction" = "N|S|E|W"})
+     * @Method("GET")
+     */
+    public function moveDirection($direction, MapManager $mapManager)
+    {
+        // calculation of the new position of the boat
+        //----------------------------------------------
+        $boat = $this->getBoat();
+        $x = $boat->getCoordX();
+        $y = $boat->getCoordY();
+
+        switch ($direction) {
+            case 'N' :
+                $y--;
+                break;
+            case 'S' :
+                $y++;
+                break;
+            case 'E' :
+                $x++;
+                break;
+            case 'W' :
+                $x--;
+                break;
+        }
+
+        // is move possible ?
+        //--------------------
+        if ($mapManager->tileExists($x, $y)) {
+            // Yes !
+            $boat->setCoordX($x);
+            $boat->setCoordY($y);
+
+            $this->getDoctrine()->getManager()->flush();
+
+            // do we found the treasure ?
+            if ($mapManager->checkTreasure($boat)) {
+                $this->addFlash('success', 'Treasure is here !');
+            }
+        } else {
+            // nop déso pas déso
+            $this->addFlash('danger', 'Tile does not exist !');
+        }
 
         return $this->redirectToRoute('map');
     }
@@ -153,4 +202,6 @@ class BoatController extends Controller
 
         return $this->redirectToRoute('boat_index');
     }
+
+
 }

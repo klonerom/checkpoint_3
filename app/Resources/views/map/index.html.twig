@@ -34,11 +34,20 @@
             <div class="col-xs-2">
                 <div class="infos">
                     <h2>Information</h2>
-                    {# Add here informations about current ship position #}
+                    <ul>
+                        <li>x : {{ boat.coordX }}</li>
+                        <li>y : {{ boat.coordY }}</li>
+                        <li>Tile type : {{ tile.type }}</li>
+                    </ul>
                 </div>
                 <div class="navigation">
                     <h2>Navigation</h2>
-                    {# Add here N/S/E/W buttons #}
+                    <div class="text-center" style="margin-bottom: 10px"><a class="btn btn-primary" style="margin: auto" href="{{ path('moveDirection', {direction: 'N'}) }}"><i class="glyphicon glyphicon-arrow-up"></i></a></div>
+                    <div style="display: flex; justify-content: space-around; margin-bottom: 10px">
+                        <a class="btn btn-primary" href="{{ path('moveDirection', {direction: 'W'}) }}"><i class="glyphicon glyphicon-arrow-left"></i></a>
+                        <a class="btn btn-primary" href="{{ path('moveDirection', {direction: 'E'}) }}"><i class="glyphicon glyphicon-arrow-right"></i></a>
+                    </div>
+                    <div class="text-center"><a class="btn btn-primary" href="{{ path('moveDirection', {direction: 'S'}) }}"><i class="glyphicon glyphicon-arrow-down"></i></a></div>
                 </div>
             </div>
         </div>

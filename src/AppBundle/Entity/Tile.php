@@ -49,6 +49,10 @@ class Tile
      */
     private $name;
 
+    /**
+     * @ORM\Column(name="has_treasure", type="boolean")
+     */
+    private $hasTreasure = false;
 
     /**
      * Get id
@@ -153,6 +157,24 @@ class Tile
     {
         $this->name = $name;
 
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTreasure() : bool
+    {
+        return $this->hasTreasure;
+    }
+
+    /**
+     * @param bool $hasTreasure
+     * @return $this
+     */
+    public function setHasTreasure(bool $hasTreasure)
+    {
+        $this->hasTreasure = $hasTreasure;
         return $this;
     }
 }

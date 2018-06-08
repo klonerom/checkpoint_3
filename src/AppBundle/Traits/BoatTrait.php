@@ -18,6 +18,9 @@ trait BoatTrait
         $this->em = $em;
     }
 
+    /**
+     * @return Boat
+     */
     public function getBoat()
     {
         return $this->em->getRepository(Boat::class)->findOneBy([]);
