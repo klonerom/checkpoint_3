@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Boat controller.
@@ -33,6 +34,33 @@ class BoatController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('map');
+    }
+
+    /**
+     * take a direction as parameter. This direction can only be 'N', 'S', 'E' or 'W'
+     * @Route("/move/{compass}", name="moveDirection", requirements={"compass"="N|S|E|W"})
+     * @Method({"GET", "POST"})
+     */
+    public function moveDirectionAction($compass)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $boat = $this->getBoat();
+
+        if ($compass == 'N') {
+            $this->moveBoatAction($boat->getCoordX(), $boat->getCoordY()-1);
+
+        } elseif ($compass == 'S') {
+            $this->moveBoatAction($boat->getCoordX(), $boat->getCoordY()+1);
+
+        } elseif ($compass == 'E') {
+            $this->moveBoatAction($boat->getCoordX()+1, $boat->getCoordY());
+
+        } elseif ($compass == 'W') {
+            $this->moveBoatAction($boat->getCoordX()-1, $boat->getCoordY());
+        }
+
+        return $this->redirectToRoute('map');
+
     }
 
     /**
