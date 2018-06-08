@@ -42,22 +42,29 @@
                     </div>
 
                 </div>
-                <div class="navigation">
+                <div class="navigation text-center">
                     <h2>Navigation</h2>
                     {# Add here N/S/E/W buttons #}
                     <div class="row ">
-                        <a href="{{ path('moveDirection', {'compass': 'N'}) }}" class="btn btn-primary btn-block">North</a>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <a href="{{ path('moveDirection', {'compass': 'W'}) }}" class="btn btn-danger btn-block">West</a>
-                        </div>
-                        <div class="col-md-6">
-                            <a href="{{ path('moveDirection', {'compass': 'E'}) }}" class="btn btn-warning btn-block">East</a>
+                        <div class="col-md-4 col-md-offset-4">
+                            <a href="{{ path('moveDirection', {'compass': 'N'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-up"></i></a>
                         </div>
                     </div>
                     <div class="row">
-                        <a href="{{ path('moveDirection', {'compass': 'S'}) }}" class="btn btn-info btn-block">South</a>
+                        <div class="col-md-4">
+                            <a href="{{ path('moveDirection', {'compass': 'W'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-left"></i></a>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-default btn-block"><i class="far fa-compass fa-lg"></i></a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="{{ path('moveDirection', {'compass': 'E'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4">
+                            <a href="{{ path('moveDirection', {'compass': 'S'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-down"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
