@@ -42,7 +42,7 @@
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }}">
-                        {{ message }}
+                        <h5 style="color: black;">{{ message }}</h5>
                     </div>
                 {% endfor %}
             {% endfor %}
