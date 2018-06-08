@@ -51,16 +51,16 @@ class MapController extends Controller
         $boat->setCoordX(0);
         $boat->setCoordY(0);
 
-        $em->persist($boat);
-        $em->flush();
+//        $em->persist($boat);
+//        $em->flush();
 
         //remove treasure
         $treasure = $mapManager->treasureIsland();
 
         if($treasure) {
             $treasure->setHasTreasure(null);
-            $em->persist($treasure);
-            $em->flush();
+//            $em->persist($treasure);
+//            $em->flush();
         }
 
 
@@ -71,7 +71,8 @@ class MapController extends Controller
             'coordY' => $treasureIsland->getCoordY(),
         ]);
         $tileTreasure->setHasTreasure(true);
-        $em->persist($tileTreasure);
+        //$em->persist($tileTreasure);
+
         $em->flush();
 
         //redirection map
