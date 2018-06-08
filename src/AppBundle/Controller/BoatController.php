@@ -74,7 +74,7 @@ class BoatController extends Controller
 
         $treasure = $mapManager->checkTreasure($boat);
         if ($treasure) {
-            $this->addFlash('success','Jack you fnd the treasure ! Congratulations !!!');
+            $this->addFlash('success','Jack you find the treasure ! Congratulations !!!');
         }
 
         return $this->redirectToRoute('map');
