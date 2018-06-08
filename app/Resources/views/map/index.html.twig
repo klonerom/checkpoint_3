@@ -35,18 +35,30 @@
                 <div class="infos">
                     <h2>Information</h2>
                     {# Add here informations about current ship position #}
-                    X : <strong>{{ boat.coordX }}</strong><br />
-                    Y : <strong>{{ boat.coordY }}</strong><br />
-                    Type : <strong>{{ tileBoat.type }}</strong>
+                    <div class="text-secondary"  style="font-size: 2rem">
+                        <p>X : <strong>{{ boat.coordX }}</strong></p>
+                        <p>Y : <strong>{{ boat.coordY }}</strong>
+                        <p>Type : <strong>{{ tileBoat.type }}</strong></p>
+                    </div>
 
                 </div>
                 <div class="navigation">
                     <h2>Navigation</h2>
                     {# Add here N/S/E/W buttons #}
-                    <a href="{{ path('moveDirection', {'compass': 'N'}) }}" class="btn btn-primary">North</a>
-                    <a href="{{ path('moveDirection', {'compass': 'S'}) }}" class="btn btn-info">South</a>
-                    <a href="{{ path('moveDirection', {'compass': 'E'}) }}" class="btn btn-warning">East</a>
-                    <a href="{{ path('moveDirection', {'compass': 'W'}) }}" class="btn btn-danger">West</a>
+                    <div class="row ">
+                        <a href="{{ path('moveDirection', {'compass': 'N'}) }}" class="btn btn-primary btn-block">North</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{ path('moveDirection', {'compass': 'W'}) }}" class="btn btn-danger btn-block">West</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ path('moveDirection', {'compass': 'E'}) }}" class="btn btn-warning btn-block">East</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a href="{{ path('moveDirection', {'compass': 'S'}) }}" class="btn btn-info btn-block">South</a>
+                    </div>
 
                 </div>
             </div>

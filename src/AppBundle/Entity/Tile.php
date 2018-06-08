@@ -49,6 +49,13 @@ class Tile
      */
     private $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="hasTreasure", type="boolean", nullable=true)
+     */
+    private $hasTreasure;
+
 
     /**
      * Get id
@@ -152,6 +159,25 @@ class Tile
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHasTreasure()
+    {
+        return $this->hasTreasure;
+    }
+
+    /**
+     * @param mixed $hasTreasure
+     * @return Tile
+     */
+    public function setHasTreasure($hasTreasure)
+    {
+        $this->hasTreasure = $hasTreasure;
 
         return $this;
     }
