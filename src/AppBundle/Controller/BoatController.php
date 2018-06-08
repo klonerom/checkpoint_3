@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Boat;
+use AppBundle\Services\MapManager;
 use AppBundle\Traits\BoatTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -41,23 +42,35 @@ class BoatController extends Controller
      * @Route("/move/{compass}", name="moveDirection", requirements={"compass"="N|S|E|W"})
      * @Method({"GET", "POST"})
      */
-    public function moveDirectionAction($compass)
+    public function moveDirectionAction($compass, MapManager $mapManager)
     {
         $em = $this->getDoctrine()->getManager();
         $boat = $this->getBoat();
 
+        $x = $boat->getCoordX();
+        $y = $boat->getCoordY();
+
         if ($compass == 'N') {
-            $this->moveBoatAction($boat->getCoordX(), $boat->getCoordY()-1);
+            $y -= 1;
 
         } elseif ($compass == 'S') {
-            $this->moveBoatAction($boat->getCoordX(), $boat->getCoordY()+1);
+            $y += 1;
 
         } elseif ($compass == 'E') {
-            $this->moveBoatAction($boat->getCoordX()+1, $boat->getCoordY());
+            $x += 1;
 
         } elseif ($compass == 'W') {
-            $this->moveBoatAction($boat->getCoordX()-1, $boat->getCoordY());
+            $x -= 1;
         }
+
+        $mapPosition = $mapManager->tileExists($x, $y);
+
+        if ($mapPosition == false) {
+            $this->addFlash('danger','Are you Crazy Jack ?!!! Your are going to out of map ! JohnDoDev Pirate is going to kill you !');
+            return $this->redirectToRoute('map');
+        }
+
+        $this->moveBoatAction($x, $y);
 
         return $this->redirectToRoute('map');
 

@@ -28,9 +28,15 @@ class MapController extends Controller
 
         $boat = $this->getBoat();
 
+        $tileBoat = $em->getRepository(Tile::class)->findOneBy([
+            'coordX' => $boat->getCoordX(),
+            'coordY' => $boat->getCoordY(),
+        ]);
+
         return $this->render('map/index.html.twig', [
             'map'  => $map ?? [],
             'boat' => $boat,
+            'tileBoat' => $tileBoat,
         ]);
     }
 }
