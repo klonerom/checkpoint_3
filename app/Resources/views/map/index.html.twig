@@ -47,23 +47,23 @@
                     {# Add here N/S/E/W buttons #}
                     <div class="row ">
                         <div class="col-md-4 col-md-offset-4">
-                            <a href="{{ path('moveDirection', {'compass': 'N'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-up"></i></a>
+                            <a href="{{ path('moveDirection', {direction: 'N'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-up"></i></a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
-                            <a href="{{ path('moveDirection', {'compass': 'W'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-left"></i></a>
+                            <a href="{{ path('moveDirection', {direction: 'W'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-left"></i></a>
                         </div>
                         <div class="col-md-4">
                             <a class="btn btn-default btn-block"><i class="far fa-compass fa-lg"></i></a>
                         </div>
                         <div class="col-md-4">
-                            <a href="{{ path('moveDirection', {'compass': 'E'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-right"></i></a>
+                            <a href="{{ path('moveDirection', {direction: 'E'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-md-offset-4">
-                            <a href="{{ path('moveDirection', {'compass': 'S'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-down"></i></a>
+                            <a href="{{ path('moveDirection', {direction: 'S'}) }}" class="btn btn-warning btn-block"><i class="fas fa-arrow-down"></i></a>
                         </div>
                     </div>
                 </div>

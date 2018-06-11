@@ -24,62 +24,68 @@ class BoatController extends Controller
      * Move the boat to coord x,y
      * @Route("/move/{x}/{y}", name="moveBoat", requirements={"x"="\d+", "y"="\d+"}))
      */
-    public function moveBoatAction(int $x, int $y)
+    public function moveBoatAction(int $x, int $y, MapManager $mapManager)
     {
         $em = $this->getDoctrine()->getManager();
+
         $boat = $this->getBoat();
 
+        //asking move out of map
+        if (!$mapManager->tileExists($x, $y)) {
+            $this->addFlash('danger','Are you Crazy Jack ?!!! Your are going to out of map !<br />JohnDoDev Pirate is going to kill you !');
+            //exit
+            return $this->redirectToRoute('map');
+        }
+
+        //asking move in the map -> boat move !
         $boat->setCoordX($x);
         $boat->setCoordY($y);
 
         $em->flush();
+
+        if ($mapManager->checkTreasure($boat)) {
+            $this->addFlash('success','Congratulations Jack !!! You have found the treasure !');
+        }
 
         return $this->redirectToRoute('map');
     }
 
     /**
      * take a direction as parameter. This direction can only be 'N', 'S', 'E' or 'W'
-     * @Route("/move/{compass}", name="moveDirection", requirements={"compass"="N|S|E|W"})
+     * @Route("/move/{direction}", name="moveDirection", requirements={"direction"="N|S|E|W"})
      * @Method({"GET", "POST"})
      */
-    public function moveDirectionAction($compass, MapManager $mapManager)
+    public function moveDirectionAction($direction)
     {
-        $em = $this->getDoctrine()->getManager();
         $boat = $this->getBoat();
 
         $x = $boat->getCoordX();
         $y = $boat->getCoordY();
 
-        if ($compass == 'N') {
-            $y -= 1;
+        // TODO utiliser ++ et --
+        switch ($direction) {
+            case 'N':
+                $y--;
+                break;
 
-        } elseif ($compass == 'S') {
-            $y += 1;
+            case 'S':
+                $y++;
+                break;
 
-        } elseif ($compass == 'E') {
-            $x += 1;
+            case 'E':
+                $x++;
+                break;
 
-        } elseif ($compass == 'W') {
-            $x -= 1;
+            case 'W':
+                $x--;
+                break;
         }
 
-        $mapPosition = $mapManager->tileExists($x, $y);
-
-        if ($mapPosition == false) {
-            $this->addFlash('danger','Are you Crazy Jack ?!!! Your are going to out of map !<br />JohnDoDev Pirate is going to kill you !');
-            return $this->redirectToRoute('map');
-        }
-
-        $this->moveBoatAction($x, $y);
-
-        $treasure = $mapManager->checkTreasure($boat);
-        if ($treasure) {
-            $this->addFlash('success','Congratulations Jack !!! You have found the treasure !');
-
-            return $this->redirectToRoute('map');
-        }
-
-        return $this->redirectToRoute('map');
+        //method which move boat with coordinates parameters
+        return $this->redirectToRoute('moveBoat', [
+            'x' => $x,
+            'y' => $y,
+        ]);
 
     }
 

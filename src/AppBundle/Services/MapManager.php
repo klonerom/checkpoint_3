@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MapManager
 {
-
     private $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -17,57 +16,42 @@ class MapManager
     }
 
 
-    public function tileExists($x, $y): bool
+    public function tileExists($x, $y) : bool
     {
-        $position = $this->entityManager->getRepository(Tile::class)->findOneBy([
+        //query result not null = true
+        return (bool) $this->entityManager->getRepository(Tile::class)->findOneBy([
             'coordX' => $x,
-             'coordY' => $y
+            'coordY' => $y
         ]);
-
-        if ($position) {
-
-            return true;
-        }
-        return false;
     }
 
     public function getRandomIsland()
     {
         $islands = $this->entityManager->getRepository(Tile::class)->findBy([
             'type' => 'island',
-            ]);
+        ]);
 
         //One random island
-        $IslandRandom = array_rand($islands,1);
+        $IslandRandom = array_rand($islands);
 
         return $islands[$IslandRandom];
     }
 
     public function treasureIsland()
     {
-        $em = $this->entityManager;
-        $treasure = $em->getRepository(Tile::class)->findOneBy([
-            'hasTreasure' => 1,
+        return $this->entityManager->getRepository(Tile::class)->findOneBy([
+            'hasTreasure' => true,
         ]);
-
-        return $treasure;
-
     }
 
     public function checkTreasure(Boat $boat)
     {
-        $em = $this->entityManager;
-
-        $tileCheck = $em->getRepository(Tile::class)->findOneBy([
+        //if treasure on these coordinates => true else false
+        return (bool) $this->entityManager->getRepository(Tile::class)->findOneBy([
             'coordX' => $boat->getCoordX(),
             'coordY' => $boat->getCoordY(),
-            'hasTreasure' => 1,
+            'hasTreasure' => true,
         ]);
-
-        if ($tileCheck) {
-            return true;
-        }
-        return false;
     }
 
 }

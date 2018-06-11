@@ -52,7 +52,7 @@ class Tile
     /**
      * @var string
      *
-     * @ORM\Column(name="hasTreasure", type="boolean", nullable=true)
+     * @ORM\Column(name="hasTreasure", type="boolean")
      */
     private $hasTreasure;
 
